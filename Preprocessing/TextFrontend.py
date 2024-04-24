@@ -13,6 +13,9 @@ from Preprocessing.articulatory_features import generate_feature_table
 from Preprocessing.articulatory_features import get_feature_to_index_lookup
 from Preprocessing.articulatory_features import get_phone_to_id
 
+# Quenya g2p
+from Preprocessing.qya_g2p import process_complete_sentence as Quenya_G2P
+
 
 class ArticulatoryCombinedTextFrontend:
 
@@ -157,6 +160,12 @@ class ArticulatoryCombinedTextFrontend:
             self.expand_abbreviations = lambda x: x
             if not silent:
                 print("Created a Farsi Text-Frontend")
+        # qya
+        elif language == "qya":
+            self.g2p_lang = "qya"
+            self.expand_abbreviations = lambda x: x
+            if not silent:
+                print("Created a Quenya Text-Frontend")
 
         else:
             print("Language not supported yet")
@@ -164,7 +173,7 @@ class ArticulatoryCombinedTextFrontend:
 
         # remember to also update get_language_id() below when adding something here, as well as the get_example_sentence function
 
-        if self.g2p_lang != "cmn" and self.g2p_lang != "cmn-latn-pinyin":
+        if self.g2p_lang != "cmn" and self.g2p_lang != "cmn-latn-pinyin" and self.g2p_lang != "qya":
             self.phonemizer_backend = EspeakBackend(language=self.g2p_lang,
                                                     punctuation_marks=';:,.!?¡¿—…"«»“”~/。【】、‥،؟“”؛',
                                                     preserve_punctuation=True,
@@ -205,6 +214,10 @@ class ArticulatoryCombinedTextFrontend:
             return "这是一个复杂的句子，它甚至包含一个停顿。"
         elif lang == "vi":
             return "Đây là một câu phức tạp, nó thậm chí còn chứa một khoảng dừng."
+            
+        # <Namárië> Ah! like gold fall the leaves in the wind, long years numberless as the wings of trees!
+        elif lang == "qya":
+            return "Ai! laurië lantar lassi súrinen, yéni únótimë ve rámar aldaron!"
         else:
             print(f"No example sentence specified for the language: {lang}\n "
                   f"Please specify an example sentence in the get_example_sentence function in Preprocessing/TextFrontend to track your progress.")
@@ -294,6 +307,9 @@ class ArticulatoryCombinedTextFrontend:
         # phonemize
         if self.g2p_lang == "cmn-latn-pinyin" or self.g2p_lang == "cmn":
             phones = pinyin_to_ipa(utt)
+        # Quenya_G2P
+        elif self.g2p_lang == "qya":
+            phones = Quenya_G2P(utt)
         else:
             phones = self.phonemizer_backend.phonemize([utt], strip=True)[0]  # To use a different phonemizer, this is the only line that needs to be exchanged
 
@@ -522,7 +538,10 @@ def get_language_id(language):
         return torch.LongTensor([16])
     elif language == "pt-br":
         return torch.LongTensor([17])
-
+        
+    # add qya
+    elif language == "qya":
+        return torch.LongTensor([18])
 
 if __name__ == '__main__':
     tf = ArticulatoryCombinedTextFrontend(language="en")
