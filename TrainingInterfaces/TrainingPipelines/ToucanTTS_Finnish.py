@@ -66,7 +66,7 @@ def run(gpu_id, resume_checkpoint, finetune, model_dir, resume, use_wandb, wandb
     finnish_datasets = list()
     finnish_datasets.append(prepare_fastspeech_corpus(transcript_dict=build_path_to_transcript_dict_css10fi(),
                                                     corpus_dir=os.path.join(PREPROCESSING_DIR, "CSS10Finnish"),
-                                                    lang="fi",fine_tune_aligner=False,ctc_selection=False))
+                                                    lang="fi",fine_tune_aligner=False))
 
     all_train_sets.append(ConcatDataset(finnish_datasets))
 
@@ -82,15 +82,14 @@ def run(gpu_id, resume_checkpoint, finetune, model_dir, resume, use_wandb, wandb
                save_directory=save_dir,
                batch_size=12,  # YOU MIGHT GET OUT OF MEMORY ISSUES ON SMALL GPUs, IF SO, DECREASE THIS.
                eval_lang="fi",  # THE LANGUAGE YOUR PROGRESS PLOTS WILL BE MADE IN
-               warmup_steps=500,
-               lr=1e-5,  # if you have enough data (over ~1000 datapoints) you can increase this up to 1e-3 and it will still be stable, but learn quicker.
+               #warmup_steps=500,
+               lr=1e-3,  # if you have enough data (over ~1000 datapoints) you can increase this up to 1e-3 and it will still be stable, but learn quicker.
                # DOWNLOAD THESE INITIALIZATION MODELS FROM THE RELEASE PAGE OF THE GITHUB OR RUN THE DOWNLOADER SCRIPT TO GET THEM AUTOMATICALLY
                # path_to_checkpoint=os.path.join(MODELS_DIR, "ToucanTTS_Meta", "best.pt") if resume_checkpoint is None else resume_checkpoint,
                path_to_embed_model=os.path.join(MODELS_DIR, "Embedding", "embedding_function.pt"),
-               #fine_tune=True if resume_checkpoint is None and not resume else finetune,
                fine_tune=finetune,
                resume=resume,
-               steps=100000,
+               #steps=100000,
                use_wandb=use_wandb)
     if use_wandb:
         wandb.finish()

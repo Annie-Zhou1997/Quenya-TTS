@@ -28,7 +28,7 @@ regular_consonants = {
     # 'z': 'z', 'j': 'j', 'q': 'k',
 }
 double_consonants = {    # 双辅音模仿芬兰语的发音模式
-    'll': 'll', 'pp': 'pp', 'nn': 'nn', 'ss': 'ss', 'tt': 'tt', 'rr': 'rt', 'mm': 'mm',
+    'll': 'll', 'pp': 'pp', 'nn': 'nn', 'ss': 'ss', 'tt': 'tt', 'rr': 'rr', 'mm': 'mm',
     'qu': 'kw', 'ny': 'ɲ', 'ty': 'c','hw': 'ʍ', 'hr': 'ɾ', 'ly': 'ʎ', 'hy': 'ç'
 }
 

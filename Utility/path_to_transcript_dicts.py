@@ -11,26 +11,33 @@ def limit_to_n(path_to_transcript_dict, n=40000):
         return limited_dict
     else:
         return path_to_transcript_dict
-
-### LJSpeech wiht 10.5 hours ###
-def build_path_to_transcript_dict_lj10():
+        
+### Cleaned CSS1O Finnish ###
+def build_path_to_transcript_dict_css10fi():
     path_to_transcript = dict()
-    dataset_path = "/scratch/s5480698/LJ10"  # 数据集路径
-    transcript_file = f"{dataset_path}/transcript.txt"  # 转录文件的完整路径
-
-    with open(transcript_file, encoding="utf8") as f:
+    with open("/scratch/s5480698/CSS10-Finnish/transcript.txt", encoding="utf8") as f:
         transcriptions = f.read()
-    
     trans_lines = transcriptions.split("\n")
     for line in trans_lines:
         if line.strip() != "":
-            parts = line.split('|')
-            audio_filename = parts[0]
-            transcript_text = parts[1].strip()
-            path_to_transcript[f"{dataset_path}/{audio_filename}"] = transcript_text
-
+            file_name, transcription = line.split("|")
+            audio_path = f"/scratch/s5480698/CSS10-Finnish/{file_name}"
+            path_to_transcript[audio_path] = transcription
     return limit_to_n(path_to_transcript)
-
+    
+### LJSpeech 10.5 hours ###
+def build_path_to_transcript_dict_lj10():
+    path_to_transcript = dict()
+    with open("/scratch/s5480698/LJ10/transcript.txt", encoding="utf8") as f:
+        transcriptions = f.read()
+    trans_lines = transcriptions.split("\n")
+    for line in trans_lines:
+        if line.strip() != "":
+            file_name, transcription = line.split("|")
+            audio_path = f"/scratch/s5480698/LJ10/{file_name}"
+            path_to_transcript[audio_path] = transcription
+    return limit_to_n(path_to_transcript)
+    
 ### Atanquesta ###
 def build_path_to_transcript_dict_Atanquesta():
     path_to_transcript = dict()
@@ -40,7 +47,6 @@ def build_path_to_transcript_dict_Atanquesta():
     for line in trans_lines:
         if line.strip() != "":
             file_name, transcription = line.split("|")
-            # 构建完整的音频文件路径
             audio_path = f"/scratch/s5480698/Atanquesta/{file_name}"
             path_to_transcript[audio_path] = transcription
     return limit_to_n(path_to_transcript)
@@ -54,11 +60,10 @@ def build_path_to_transcript_dict_Glaemscrafu():
     for line in trans_lines:
         if line.strip() != "":
             file_name, transcription = line.split("|")
-            # 构建完整的音频文件路径
             audio_path = f"/scratch/s5480698/Glaemscrafu/{file_name}"
             path_to_transcript[audio_path] = transcription
     return limit_to_n(path_to_transcript)
-
+###################################################################################
 
 def build_path_to_transcript_dict_mls_italian():
     lang = "italian"
@@ -409,17 +414,17 @@ def build_path_to_transcript_dict_css10nl():
     return limit_to_n(path_to_transcript)
 
 
-def build_path_to_transcript_dict_css10fi():
-    path_to_transcript = dict()
-    language = "finnish"
-    with open(f"/scratch/s5480698/fi/transcript.txt", encoding="utf8") as f:
-        transcriptions = f.read()
-    trans_lines = transcriptions.split("\n")
-    for line in trans_lines:
-        if line.strip() != "":
-            path_to_transcript[f"/scratch/s5480698/fi/{line.split('|')[0]}"] = \
-                line.split("|")[2]
-    return limit_to_n(path_to_transcript)
+#def build_path_to_transcript_dict_css10fi():
+#    path_to_transcript = dict()
+#    language = "finnish"
+#    with open(f"/scratch/s5480698/fi/transcript.txt", encoding="utf8") as f:
+#        transcriptions = f.read()
+#    trans_lines = transcriptions.split("\n")
+#    for line in trans_lines:
+#        if line.strip() != "":
+#            path_to_transcript[f"/scratch/s5480698/fi/{line.split('|')[0]}"] = \
+#                line.split("|")[2]
+#    return limit_to_n(path_to_transcript)
 
 
 def build_path_to_transcript_dict_css10ru():

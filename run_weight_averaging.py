@@ -12,7 +12,6 @@ from TrainingInterfaces.Text_to_Spectrogram.StochasticToucanTTS.StochasticToucan
 from TrainingInterfaces.Text_to_Spectrogram.ToucanTTS.ToucanTTS import ToucanTTS
 from Utility.storage_config import MODELS_DIR
 
-
 def load_net_toucan(path):
     check_dict = torch.load(path, map_location=torch.device("cpu"))
     try:
