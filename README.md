@@ -1,4 +1,4 @@
-# Quneya TTS
+# Quneya TTS 🧚🏻‍♀️
 
 This project is a Quneya TTS created using ToucanTTS. It is a master's thesis project for the MSc in Voice Technology at the University of Groningen.
 
