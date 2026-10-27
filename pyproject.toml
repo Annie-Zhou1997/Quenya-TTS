@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+# The installable package is the Quenya G2P only. It has no dependencies, so other projects
+# (IMS-Toucan, the book, anything that needs Quenya IPA) can use it without the TTS code.
+[project]
+name = "quenya-g2p"
+version = "0.1.0"
+description = "Rule-based grapheme-to-phoneme conversion for Third Age Quenya (Tolkien's High-elven)"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.8"
+authors = [{ name = "Annie Zhou" }, { name = "Bruno Pacheco" }]
+keywords = ["quenya", "tolkien", "g2p", "ipa", "phonemizer"]
+
+[project.urls]
+Homepage = "https://github.com/brunopacheco1/Quenya-TTS"
+
+[project.scripts]
+quenya-g2p = "quenya_g2p.__main__:main"
+
+[tool.setuptools]
+packages = ["quenya_g2p"]

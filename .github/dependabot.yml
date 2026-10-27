@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2026 Bruno Pacheco (https://bruno.pacheco.lu)
+#
+# SPDX-License-Identifier: Apache-2.0
+
+# requirements.txt must stay in step with the pinned IMS-Toucan submodule (see its header), so Dependabot opens no
+# routine version updates for it (open-pull-requests-limit: 0) and only proposes security fixes. Security alerts
+# and security updates are switched on in the repository settings.
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
+
+  # Tells when upstream IMS-Toucan has moved on. Updating the submodule means checking requirements.txt too.
+  - package-ecosystem: gitsubmodule
+    directory: /
+    schedule:
+      interval: monthly

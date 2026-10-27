@@ -1,0 +1,4 @@
+[submodule "toucan"]
+	path = toucan
+	url = https://github.com/DigitalPhonetics/IMS-Toucan.git
+	branch = MassiveScaleToucan
